@@ -2116,14 +2116,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "sizes",
   props: ['sizes'],
   data: function data() {
-    return {};
+    return {
+      name: ''
+    };
   },
   mounted: function mounted() {},
-  methods: {}
+  methods: {
+    create: function create() {
+      var self = this;
+
+      if (this.name !== '' && this.name !== undefined) {
+        axios.post('/api/sizes', {
+          name: this.name
+        }).then(function (response) {
+          console.log("La respuesta del servidor para crear una talla es : ", response); //self.sizes = response.data.data
+        });
+      } else {
+        this.$swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Debe completar todos los campos para poder crear un nuevo elemento'
+        });
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -24979,40 +25021,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xl-12 col-lg-10" }, [
+      _c("div", { staticClass: "col-xl-8 col-lg-7" }, [
         _c("div", { staticClass: "card shadow mb-4" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "card-header py-3 d-flex flex-row align-items-center justify-content-between"
-            },
-            [
-              _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-                _vm._v(
-                  "\n                        Listado de tallas creadas\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.create()
-                    }
-                  }
-                },
-                [_vm._v("Crear")]
-              )
-            ]
-          ),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("table", { staticClass: "table" }, [
-              _vm._m(0),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -25030,11 +25045,68 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(1, true)
+                    _vm._m(2, true)
                   ])
                 }),
                 0
               )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-4 col-lg-5" }, [
+        _c("div", { staticClass: "card shadow mb-4" }, [
+          _vm._m(3),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "chart-pie pt-4 pb-2" }, [
+              _c("form", { attrs: { action: "" } }, [
+                _c("label", { attrs: { for: "name" } }, [_vm._v("Nombre")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: this.name,
+                      expression: "this.name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "name",
+                    id: "name",
+                    placeholder: "Nombre de la nueva talla"
+                  },
+                  domProps: { value: this.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(this, "name", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success btn-block",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.create()
+                      }
+                    }
+                  },
+                  [_vm._v("Crear")]
+                )
+              ])
             ])
           ])
         ])
@@ -25043,6 +25115,25 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "card-header py-3 d-flex flex-row align-items-center justify-content-between"
+      },
+      [
+        _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+          _vm._v(
+            "\n                        Listado de tallas creadas\n                    "
+          )
+        ])
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -25072,6 +25163,23 @@ var staticRenderFns = [
         )
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "card-header py-3 d-flex flex-row align-items-center justify-content-between"
+      },
+      [
+        _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+          _vm._v("Registrar una nueva talla")
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
