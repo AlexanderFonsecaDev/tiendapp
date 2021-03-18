@@ -39,6 +39,8 @@ class SizeController extends Controller
 
     public function destroy($id)
     {
-        //
+        $size = Size::findOrFail($id);
+        $size->delete();
+        return response()->json("Completo",200);
     }
 }

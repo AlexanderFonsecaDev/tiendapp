@@ -23,14 +23,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="size in this.sizes">
+                            <tr v-for="(size, index) in this.sizes">
                                 <td class="text-center" v-text="size.attributes.name"></td>
                                 <td class="text-center" v-text="size.attributes.created_at"></td>
                                 <td class="text-right">
                                     <button class="btn btn-sm btn-warning">
                                         Editar
                                     </button>
-                                    <button class="btn btn-sm btn-danger">
+                                    <button class="btn btn-sm btn-danger" @click="erase(size,index)">
                                         Eliminar
                                     </button>
                                 </td>
@@ -54,7 +54,8 @@
                         <div class="chart-pie pt-4 pb-2">
                             <form action="">
                                 <label for="name">Nombre</label>
-                                <input class="form-control" type="text" name="name" id="name" v-model="this.name" placeholder="Nombre de la nueva talla">
+                                <input class="form-control" type="text" name="name" id="name" v-model="name"
+                                       placeholder="Nombre de la nueva talla">
                                 <hr>
                                 <button type="button" class="btn btn-success btn-block" @click="create()">Crear</button>
                             </form>
@@ -70,31 +71,40 @@
 <script>
 export default {
     name: "sizes",
-    props:['sizes'],
+    props: ['sizes'],
     data() {
         return {
-            name : ''
+            name: ''
         }
     },
-    mounted() {},
+    mounted() {
+    },
     methods: {
-        create(){
+        create() {
             let self = this
-            if (this.name !== '' && this.name !== undefined){
-                axios.post('/api/sizes',{
-                    name : this.name
+            if (this.name !== '' && this.name !== undefined) {
+                axios.post('/api/sizes', {
+                    name: this.name
                 })
-                .then(function (response){
-                    console.log("La respuesta del servidor para crear una talla es : ",response)
-                    //self.sizes = response.data.data
-                })
-            }else{
+                    .then(function (response) {
+                        self.sizes.push(response.data.data)
+                        self.name = ''
+                    })
+            } else {
                 this.$swal({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Debe completar todos los campos para poder crear un nuevo elemento',
                 })
             }
+        },
+        erase(item, index) {
+            let self = this
+            let url = '/api/sizes/' + item.id
+            axios.delete(url)
+                .then(function (response) {
+                    self.sizes.splice(index, 1)
+                })
         }
     }
 }

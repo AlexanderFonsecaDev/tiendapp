@@ -1905,14 +1905,79 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "marks",
   props: ['marks'],
   data: function data() {
-    return {};
+    return {
+      name: '',
+      reference: ''
+    };
   },
   mounted: function mounted() {},
-  methods: {}
+  methods: {
+    create: function create() {
+      var self = this;
+
+      if (this.name !== '' && this.name !== undefined && this.reference !== '' && this.reference !== undefined) {
+        axios.post('/api/marks', {
+          name: this.name,
+          reference: this.reference
+        }).then(function (response) {
+          self.marks.push(response.data.data);
+          self.name = '';
+          self.reference = '';
+        })["catch"](function (error) {
+          this.$swal({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error al momento de crear'
+          });
+        });
+      }
+    },
+    erase: function erase(item, index) {
+      var self = this;
+      var url = '/api/marks/' + item.id;
+      axios["delete"](url).then(function (response) {
+        self.marks.splice(index, 1);
+      });
+    }
+  },
+  computed: {
+    edit: function edit() {
+      return false;
+    }
+  }
 });
 
 /***/ }),
@@ -2138,6 +2203,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "sizes",
   props: ['sizes'],
@@ -2155,7 +2221,8 @@ __webpack_require__.r(__webpack_exports__);
         axios.post('/api/sizes', {
           name: this.name
         }).then(function (response) {
-          console.log("La respuesta del servidor para crear una talla es : ", response); //self.sizes = response.data.data
+          self.sizes.push(response.data.data);
+          self.name = '';
         });
       } else {
         this.$swal({
@@ -2164,6 +2231,13 @@ __webpack_require__.r(__webpack_exports__);
           text: 'Debe completar todos los campos para poder crear un nuevo elemento'
         });
       }
+    },
+    erase: function erase(item, index) {
+      var self = this;
+      var url = '/api/sizes/' + item.id;
+      axios["delete"](url).then(function (response) {
+        self.sizes.splice(index, 1);
+      });
     }
   }
 });
@@ -24740,7 +24814,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xl-12 col-lg-10" }, [
+      _c("div", { staticClass: "col-xl-8 col-lg-7" }, [
         _c("div", { staticClass: "card shadow mb-4" }, [
           _c(
             "div",
@@ -24777,7 +24851,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(this.marks, function(mark) {
+                _vm._l(this.marks, function(mark, index) {
                   return _c("tr", [
                     _c("td", {
                       staticClass: "text-center",
@@ -24798,11 +24872,124 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(1, true)
+                    _c("td", { staticClass: "text-right" }, [
+                      _c("button", { staticClass: "btn btn-sm btn-warning" }, [
+                        _vm._v(
+                          "\n                                    Editar\n                                "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-danger",
+                          on: {
+                            click: function($event) {
+                              return _vm.erase(mark, index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    Eliminar\n                                "
+                          )
+                        ]
+                      )
+                    ])
                   ])
                 }),
                 0
               )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-4 col-lg-5" }, [
+        _c("div", { staticClass: "card shadow mb-4" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "chart-pie pt-4 pb-2" }, [
+              _c("form", { attrs: { action: "" } }, [
+                _c("label", { attrs: { for: "name" } }, [_vm._v("Nombre")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.name,
+                      expression: "name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "name",
+                    id: "name",
+                    placeholder: "Nombre de la nueva marca"
+                  },
+                  domProps: { value: _vm.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "reference" } }, [
+                  _vm._v("Referencia")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.reference,
+                      expression: "reference"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "reference",
+                    id: "reference",
+                    placeholder: "ABC123"
+                  },
+                  domProps: { value: _vm.reference },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.reference = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success btn-block",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.create()
+                      }
+                    }
+                  },
+                  [_vm._v("Crear")]
+                )
+              ])
             ])
           ])
         ])
@@ -24829,19 +25016,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-right" }, [
-      _c("button", { staticClass: "btn btn-sm btn-warning" }, [
-        _vm._v(
-          "\n                                    Editar\n                                "
-        )
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-sm btn-danger" }, [
-        _vm._v(
-          "\n                                    Eliminar\n                                "
-        )
-      ])
-    ])
+    return _c(
+      "div",
+      {
+        staticClass:
+          "card-header py-3 d-flex flex-row align-items-center justify-content-between"
+      },
+      [
+        _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+          _vm._v("Registrar una nueva marca")
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -25031,7 +25217,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(this.sizes, function(size) {
+                _vm._l(this.sizes, function(size, index) {
                   return _c("tr", [
                     _c("td", {
                       staticClass: "text-center",
@@ -25045,7 +25231,30 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm._m(2, true)
+                    _c("td", { staticClass: "text-right" }, [
+                      _c("button", { staticClass: "btn btn-sm btn-warning" }, [
+                        _vm._v(
+                          "\n                                    Editar\n                                "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-danger",
+                          on: {
+                            click: function($event) {
+                              return _vm.erase(size, index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    Eliminar\n                                "
+                          )
+                        ]
+                      )
+                    ])
                   ])
                 }),
                 0
@@ -25057,7 +25266,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-4 col-lg-5" }, [
         _c("div", { staticClass: "card shadow mb-4" }, [
-          _vm._m(3),
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "chart-pie pt-4 pb-2" }, [
@@ -25069,8 +25278,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: this.name,
-                      expression: "this.name"
+                      value: _vm.name,
+                      expression: "name"
                     }
                   ],
                   staticClass: "form-control",
@@ -25080,13 +25289,13 @@ var render = function() {
                     id: "name",
                     placeholder: "Nombre de la nueva talla"
                   },
-                  domProps: { value: this.name },
+                  domProps: { value: _vm.name },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(this, "name", $event.target.value)
+                      _vm.name = $event.target.value
                     }
                   }
                 }),
@@ -25143,24 +25352,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Nombre")]),
         _vm._v(" "),
         _c("th", [_vm._v("Fecha de creacion")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-right" }, [
-      _c("button", { staticClass: "btn btn-sm btn-warning" }, [
-        _vm._v(
-          "\n                                    Editar\n                                "
-        )
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-sm btn-danger" }, [
-        _vm._v(
-          "\n                                    Eliminar\n                                "
-        )
       ])
     ])
   },
