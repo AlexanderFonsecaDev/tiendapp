@@ -25,3 +25,5 @@ El entorno de desarrollo que se utilizó para este proyecto es <a href="https://
 3. Luego ejecutamos el siguiente comando composer install --optimize-autoloader --no-dev
 4. Una vez termine de instalarse nuestras dependencias ejecutamos el comando php artisan key:generate
 5. Después debemos instalar nuestras dependencias para vue atrás ves del comando npm install && run dev
+6. Crear una base de datos y la referenciamos el en archivo .env
+7. Ejecutar el comando php artisan migrate:refresh --seed
