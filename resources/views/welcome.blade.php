@@ -138,24 +138,30 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Funcionamiento</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
+                                    <p>Cada uno de estos módulos sirve para manejar las diferentes entidades del sistema
+                                        en cada uno de ellos podrá administrar a su gusto los diferentes parámetros que
+                                        tendrá el sistema.</p>
                                 </div>
                             </div>
 
                         </div>
                     </div>
 
-                    <transition appear enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__jello" mode="out-in" v-if="this.view_product">
+                    <transition appear enter-active-class="animate__animated animate__fadeInRight"
+                                leave-active-class="animate__animated animate__jello" mode="out-in"
+                                v-if="this.view_product">
                         <products :marks="this.marks" :sizes="this.sizes"></products>
                     </transition>
 
-                    <transition appear enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__jello" mode="out-in" v-if="this.view_size">
+                    <transition appear enter-active-class="animate__animated animate__fadeInRight"
+                                leave-active-class="animate__animated animate__jello" mode="out-in"
+                                v-if="this.view_size">
                         <sizes :sizes="this.sizes"></sizes>
                     </transition>
 
-                    <transition appear enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__jello" mode="out-in" v-if="this.view_mark">
+                    <transition appear enter-active-class="animate__animated animate__fadeInRight"
+                                leave-active-class="animate__animated animate__jello" mode="out-in"
+                                v-if="this.view_mark">
                         <marks :marks="this.marks"></marks>
                     </transition>
 

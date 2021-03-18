@@ -99,6 +99,11 @@ export default {
                     self.marks.push(response.data.data)
                     self.name = ''
                     self.reference = ''
+                    self.$swal({
+                        icon: 'success',
+                        title: '¡Perfecto!',
+                        text: 'Operación exitosa',
+                    })
                 })
                 .catch(function (error){
                     this.$swal({
@@ -115,6 +120,11 @@ export default {
             axios.delete(url)
                 .then(function (response) {
                     self.marks.splice(index, 1)
+                    self.$swal({
+                        icon: 'success',
+                        title: '¡Perfecto!',
+                        text: 'Operación exitosa',
+                    })
                 })
         }
     },

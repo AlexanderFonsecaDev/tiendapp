@@ -89,6 +89,11 @@ export default {
                     .then(function (response) {
                         self.sizes.push(response.data.data)
                         self.name = ''
+                        self.$swal({
+                            icon: 'success',
+                            title: '¡Perfecto!',
+                            text: 'Operación exitosa',
+                        })
                     })
             } else {
                 this.$swal({
@@ -104,6 +109,11 @@ export default {
             axios.delete(url)
                 .then(function (response) {
                     self.sizes.splice(index, 1)
+                    self.$swal({
+                        icon: 'success',
+                        title: '¡Perfecto!',
+                        text: 'Operación exitosa',
+                    })
                 })
         }
     }
