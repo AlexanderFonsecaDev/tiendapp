@@ -15,13 +15,13 @@
 
 </head>
 <body>
-<div id="app" class="d-flex">
+<div id="app" class="d-flex" style="width: 100%;">
     <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" style="width: 100%;">
 
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column" style="width: 100%;">
 
             <!-- Main Content -->
             <div id="content">

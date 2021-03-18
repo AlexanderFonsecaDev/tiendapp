@@ -19,10 +19,12 @@ class ProductResource extends JsonResource
             'id' => (string)$this->resource->getRouteKey(),
             'attributes' => [
                 'size' => $this->resource->size->name,
+                'size_id' => $this->resource->size->id,
                 'mark' => $this->resource->mark->name,
+                'mark_id' => $this->resource->mark->id,
                 'name' => $this->resource->name,
                 'quantity' => $this->resource->quantity,
-                'date_shipment' => $this->resource->date_shipment->format('d/m/Y h:i A'),
+                'date_shipment' => $this->resource->date_shipment->format('Y-m-d'),
                 'observation' => $this->resource->observation,
             ]
         ];

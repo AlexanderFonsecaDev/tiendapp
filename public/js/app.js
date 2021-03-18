@@ -1928,8 +1928,14 @@ __webpack_require__.r(__webpack_exports__);
   props: ['marks'],
   data: function data() {
     return {
-      name: '',
-      reference: ''
+      edit: false,
+      mark: {
+        id: '',
+        attributes: {
+          name: '',
+          reference: ''
+        }
+      }
     };
   },
   mounted: function mounted() {},
@@ -1937,14 +1943,14 @@ __webpack_require__.r(__webpack_exports__);
     create: function create() {
       var self = this;
 
-      if (this.name !== '' && this.name !== undefined && this.reference !== '' && this.reference !== undefined) {
+      if (this.mark.attributes.name !== '' && this.mark.attributes.name !== undefined && this.mark.attributes.reference !== '' && this.mark.attributes.reference !== undefined) {
         axios.post('/api/marks', {
-          name: this.name,
-          reference: this.reference
+          name: this.mark.attributes.name,
+          reference: this.mark.attributes.reference
         }).then(function (response) {
           self.marks.push(response.data.data);
-          self.name = '';
-          self.reference = '';
+          self.mark.attributes.name = '';
+          self.mark.attributes.reference = '';
           self.$swal({
             icon: 'success',
             title: '¡Perfecto!',
@@ -1958,6 +1964,27 @@ __webpack_require__.r(__webpack_exports__);
           });
         });
       }
+    },
+    update: function update(item) {
+      this.edit = true;
+      var self = this;
+      this.mark.id = item.id;
+      this.mark.attributes.name = item.attributes.name;
+      this.mark.attributes.reference = item.attributes.reference;
+    },
+    change: function change() {
+      var self = this;
+      var url = '/api/marks/' + this.mark.id;
+      axios.put(url, {
+        name: this.mark.attributes.name,
+        reference: this.mark.attributes.reference
+      }).then(function (response) {
+        self.products = response.data.data;
+        self.edit = false;
+        self.mark.id = '';
+        self.mark.attributes.name = '';
+        self.mark.attributes.reference = '';
+      });
     },
     erase: function erase(item, index) {
       var self = this;
@@ -2113,6 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
       products: [],
       selected_mark: '',
       selected_size: '',
+      edit: false,
       product: {
         id: '',
         attributes: {
@@ -2157,6 +2185,39 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
+    update: function update(item) {
+      this.edit = true;
+      var self = this;
+      this.product.id = item.id;
+      this.product.attributes.size = item.attributes.size_id;
+      this.product.attributes.mark = item.attributes.mark_id;
+      this.product.attributes.name = item.attributes.name;
+      this.product.attributes.quantity = item.attributes.quantity;
+      this.product.attributes.date_shipment = item.attributes.date_shipment;
+      this.product.attributes.observation = item.attributes.observation;
+    },
+    change: function change() {
+      var self = this;
+      var url = '/api/products/' + this.product.id;
+      axios.put(url, {
+        size_id: this.product.attributes.size,
+        mark_id: this.product.attributes.mark,
+        name: this.product.attributes.name,
+        quantity: this.product.attributes.quantity,
+        date_shipment: this.product.attributes.date_shipment,
+        observation: this.product.attributes.observation
+      }).then(function (response) {
+        self.products = response.data.data;
+        self.edit = false;
+        self.product.id = '';
+        self.product.attributes.size = '';
+        self.product.attributes.mark = '';
+        self.product.attributes.name = '';
+        self.product.attributes.quantity = '';
+        self.product.attributes.date_shipment = '';
+        self.product.attributes.observation = '';
+      });
+    },
     erase: function erase(item, index) {
       var self = this;
       var url = '/api/products/' + item.id;
@@ -2169,7 +2230,8 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     }
-  }
+  },
+  computed: {}
 });
 
 /***/ }),
@@ -24119,38 +24181,11 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-xl-8 col-lg-7" }, [
         _c("div", { staticClass: "card shadow mb-4" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "card-header py-3 d-flex flex-row align-items-center justify-content-between"
-            },
-            [
-              _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-                _vm._v(
-                  "\n                        Listado de marcas creadas\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.create()
-                    }
-                  }
-                },
-                [_vm._v("Crear")]
-              )
-            ]
-          ),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("table", { staticClass: "table" }, [
-              _vm._m(0),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -24210,7 +24245,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-4 col-lg-5" }, [
         _c("div", { staticClass: "card shadow mb-4" }, [
-          _vm._m(1),
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "chart-pie pt-4 pb-2" }, [
@@ -24222,8 +24257,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.name,
-                      expression: "name"
+                      value: _vm.mark.attributes.name,
+                      expression: "mark.attributes.name"
                     }
                   ],
                   staticClass: "form-control",
@@ -24233,13 +24268,13 @@ var render = function() {
                     id: "name",
                     placeholder: "Nombre de la nueva marca"
                   },
-                  domProps: { value: _vm.name },
+                  domProps: { value: _vm.mark.attributes.name },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.name = $event.target.value
+                      _vm.$set(_vm.mark.attributes, "name", $event.target.value)
                     }
                   }
                 }),
@@ -24255,8 +24290,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.reference,
-                      expression: "reference"
+                      value: _vm.mark.attributes.reference,
+                      expression: "mark.attributes.reference"
                     }
                   ],
                   staticClass: "form-control",
@@ -24266,32 +24301,50 @@ var render = function() {
                     id: "reference",
                     placeholder: "ABC123"
                   },
-                  domProps: { value: _vm.reference },
+                  domProps: { value: _vm.mark.attributes.reference },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.reference = $event.target.value
+                      _vm.$set(
+                        _vm.mark.attributes,
+                        "reference",
+                        $event.target.value
+                      )
                     }
                   }
                 }),
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success btn-block",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.create()
-                      }
-                    }
-                  },
-                  [_vm._v("Crear")]
-                )
+                !_vm.edit
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success btn-block",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.create()
+                          }
+                        }
+                      },
+                      [_vm._v("Crear")]
+                    )
+                  : _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info btn-block",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.change()
+                          }
+                        }
+                      },
+                      [_vm._v("Actualizar")]
+                    )
               ])
             ])
           ])
@@ -24301,6 +24354,25 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "card-header py-3 d-flex flex-row align-items-center justify-content-between"
+      },
+      [
+        _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+          _vm._v(
+            "\n                        Listado de marcas creadas\n                    "
+          )
+        ])
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -24406,11 +24478,22 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-right" }, [
-                      _c("button", { staticClass: "btn btn-sm btn-warning" }, [
-                        _vm._v(
-                          "\n                                    Editar\n                                "
-                        )
-                      ]),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-warning",
+                          on: {
+                            click: function($event) {
+                              return _vm.update(product)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    Editar\n                                "
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c(
                         "button",
@@ -24686,19 +24769,33 @@ var render = function() {
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success btn-block",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.create()
-                      }
-                    }
-                  },
-                  [_vm._v("Crear")]
-                )
+                !_vm.edit
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success btn-block",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.create()
+                          }
+                        }
+                      },
+                      [_vm._v("Crear")]
+                    )
+                  : _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info btn-block",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.change()
+                          }
+                        }
+                      },
+                      [_vm._v("Actualizar")]
+                    )
               ])
             ])
           ])

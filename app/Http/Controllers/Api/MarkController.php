@@ -34,7 +34,13 @@ class MarkController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $mark = Mark::findOrFail($id);
+        $request->validate([
+            'name' => 'required|max:255',
+            'reference' => 'required|max:255',
+        ]);
+        $mark->update($request->all());
+        return MarkCollection::make(Mark::all());
     }
 
     public function destroy($id)

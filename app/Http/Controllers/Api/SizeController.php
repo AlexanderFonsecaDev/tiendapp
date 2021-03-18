@@ -34,7 +34,12 @@ class SizeController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $size = Size::findOrFail($id);
+        $request->validate([
+            'name' => 'required'
+        ]);
+        $size->update($request->all());
+        return SizeCollection::make(Size::all());
     }
 
     public function destroy($id)

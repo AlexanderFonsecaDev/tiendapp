@@ -36,7 +36,7 @@
                                 <td class="text-center" v-text="product.attributes.date_shipment"></td>
                                 <td class="text-center" v-text="product.attributes.observation"></td>
                                 <td class="text-right">
-                                    <button class="btn btn-sm btn-warning">
+                                    <button class="btn btn-sm btn-warning" @click="update(product)">
                                         Editar
                                     </button>
                                     <button class="btn btn-sm btn-danger" @click="erase(product,index)">
@@ -100,8 +100,8 @@
                                 </select>
 
                                 <hr>
-
-                                <button type="button" class="btn btn-success btn-block" @click="create()">Crear</button>
+                                <button type="button" class="btn btn-success btn-block" @click="create()" v-if="!edit">Crear</button>
+                                <button type="button" class="btn btn-info btn-block" @click="change()" v-else>Actualizar</button>
                             </form>
                         </div>
                     </div>
@@ -120,6 +120,7 @@ export default {
             products: [],
             selected_mark: '',
             selected_size: '',
+            edit: false,
             product: {
                 id: '',
                 attributes: {
@@ -167,6 +168,40 @@ export default {
                 })
 
         },
+        update(item){
+            this.edit = true;
+            let self = this
+            this.product.id = item.id
+            this.product.attributes.size = item.attributes.size_id
+            this.product.attributes.mark = item.attributes.mark_id
+            this.product.attributes.name = item.attributes.name
+            this.product.attributes.quantity = item.attributes.quantity
+            this.product.attributes.date_shipment = item.attributes.date_shipment
+            this.product.attributes.observation = item.attributes.observation
+        },
+        change(){
+            let self = this
+            let url = '/api/products/' + this.product.id
+            axios.put(url,{
+                size_id: this.product.attributes.size,
+                mark_id: this.product.attributes.mark,
+                name: this.product.attributes.name,
+                quantity: this.product.attributes.quantity,
+                date_shipment: this.product.attributes.date_shipment,
+                observation: this.product.attributes.observation
+            })
+            .then(function (response){
+                self.products = response.data.data
+                self.edit = false;
+                self.product.id = ''
+                self.product.attributes.size = ''
+                self.product.attributes.mark = ''
+                self.product.attributes.name = ''
+                self.product.attributes.quantity = ''
+                self.product.attributes.date_shipment = ''
+                self.product.attributes.observation = ''
+            })
+        },
         erase(item, index) {
             let self = this
             let url = '/api/products/' + item.id
@@ -180,6 +215,9 @@ export default {
                     })
                 })
         }
+    },
+    computed: {
+
     }
 }
 </script>

@@ -12,7 +12,6 @@
                         <h6 class="m-0 font-weight-bold text-primary">
                             Listado de marcas creadas
                         </h6>
-                        <button type="button" class="btn btn-primary" @click="create()">Crear</button>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -56,16 +55,17 @@
                         <div class="chart-pie pt-4 pb-2">
                             <form action="">
                                 <label for="name">Nombre</label>
-                                <input class="form-control" type="text" name="name" id="name" v-model="name"
+                                <input class="form-control" type="text" name="name" id="name" v-model="mark.attributes.name"
                                        placeholder="Nombre de la nueva marca">
                                 <hr>
 
                                 <label for="reference">Referencia</label>
-                                <input class="form-control" type="text" name="reference" id="reference" v-model="reference" placeholder="ABC123">
+                                <input class="form-control" type="text" name="reference" id="reference" v-model="mark.attributes.reference" placeholder="ABC123">
 
                                 <hr>
 
-                                <button type="button" class="btn btn-success btn-block" @click="create()">Crear</button>
+                                <button type="button" class="btn btn-success btn-block" @click="create()" v-if="!edit">Crear</button>
+                                <button type="button" class="btn btn-info btn-block" @click="change()" v-else>Actualizar</button>
                             </form>
                         </div>
                     </div>
@@ -82,23 +82,29 @@ export default {
     props:['marks'],
     data() {
         return {
-            name : '',
-            reference: '',
+            edit: false,
+            mark: {
+                id: '',
+                attributes: {
+                    name: '',
+                    reference: '',
+                }
+            }
         }
     },
     mounted() {},
     methods: {
         create(){
             let self = this
-            if (this.name !== '' && this.name !== undefined && this.reference !== '' && this.reference !== undefined){
+            if (this.mark.attributes.name !== '' && this.mark.attributes.name !== undefined && this.mark.attributes.reference !== '' && this.mark.attributes.reference !== undefined){
                 axios.post('/api/marks',{
-                    name: this.name,
-                    reference: this.reference
+                    name: this.mark.attributes.name,
+                    reference: this.mark.attributes.reference
                 })
                 .then(function (response){
                     self.marks.push(response.data.data)
-                    self.name = ''
-                    self.reference = ''
+                    self.mark.attributes.name = ''
+                    self.mark.attributes.reference = ''
                     self.$swal({
                         icon: 'success',
                         title: '¡Perfecto!',
@@ -113,6 +119,28 @@ export default {
                     })
                 })
             }
+        },
+        update(item){
+            this.edit = true;
+            let self = this
+            this.mark.id = item.id
+            this.mark.attributes.name = item.attributes.name
+            this.mark.attributes.reference = item.attributes.reference
+        },
+        change(){
+            let self = this
+            let url = '/api/marks/' + this.mark.id
+            axios.put(url,{
+                name: this.mark.attributes.name,
+                reference: this.mark.attributes.reference,
+            })
+                .then(function (response){
+                    self.products = response.data.data
+                    self.edit = false;
+                    self.mark.id = ''
+                    self.mark.attributes.name = ''
+                    self.mark.attributes.reference = ''
+                })
         },
         erase(item, index) {
             let self = this
