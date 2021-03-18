@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
+    <title>TiendApp</title>
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -152,11 +152,11 @@
                     </transition>
 
                     <transition appear enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__jello" mode="out-in" v-if="this.view_size">
-                        <sizes></sizes>
+                        <sizes :sizes="this.sizes"></sizes>
                     </transition>
 
                     <transition appear enter-active-class="animate__animated animate__fadeInRight" leave-active-class="animate__animated animate__jello" mode="out-in" v-if="this.view_mark">
-                        <marks></marks>
+                        <marks :marks="this.marks"></marks>
                     </transition>
 
 
@@ -170,7 +170,9 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <a href="https://dantealexf.github.io/" class="text-decoration-none">
+                            <span>Copyright &copy; Alexander Fonseca 2021</span>
+                        </a>
                     </div>
                 </div>
             </footer>

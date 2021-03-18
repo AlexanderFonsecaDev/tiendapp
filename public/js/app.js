@@ -1860,8 +1860,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "marks"
+  name: "marks",
+  props: ['marks'],
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {},
+  methods: {}
 });
 
 /***/ }),
@@ -2022,8 +2073,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "sizes"
+  name: "sizes",
+  props: ['sizes'],
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {},
+  methods: {}
 });
 
 /***/ }),
@@ -24596,9 +24696,112 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xl-12 col-lg-10" }, [
+        _c("div", { staticClass: "card shadow mb-4" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "card-header py-3 d-flex flex-row align-items-center justify-content-between"
+            },
+            [
+              _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+                _vm._v(
+                  "\n                        Listado de marcas creadas\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.create()
+                    }
+                  }
+                },
+                [_vm._v("Crear")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(this.marks, function(mark) {
+                  return _c("tr", [
+                    _c("td", {
+                      staticClass: "text-center",
+                      domProps: { textContent: _vm._s(mark.attributes.name) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-center",
+                      domProps: {
+                        textContent: _vm._s(mark.attributes.reference)
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-center",
+                      domProps: {
+                        textContent: _vm._s(mark.attributes.created_at)
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(1, true)
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "table-light" }, [
+      _c("tr", { staticClass: "text-center" }, [
+        _c("th", [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Referencia")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Fecha de creacion")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-right" }, [
+      _c("button", { staticClass: "btn btn-sm btn-warning" }, [
+        _vm._v(
+          "\n                                    Editar\n                                "
+        )
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-sm btn-danger" }, [
+        _vm._v(
+          "\n                                    Eliminar\n                                "
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -24774,9 +24977,103 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xl-12 col-lg-10" }, [
+        _c("div", { staticClass: "card shadow mb-4" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "card-header py-3 d-flex flex-row align-items-center justify-content-between"
+            },
+            [
+              _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+                _vm._v(
+                  "\n                        Listado de tallas creadas\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.create()
+                    }
+                  }
+                },
+                [_vm._v("Crear")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(this.sizes, function(size) {
+                  return _c("tr", [
+                    _c("td", {
+                      staticClass: "text-center",
+                      domProps: { textContent: _vm._s(size.attributes.name) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      staticClass: "text-center",
+                      domProps: {
+                        textContent: _vm._s(size.attributes.created_at)
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(1, true)
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "table-light" }, [
+      _c("tr", { staticClass: "text-center" }, [
+        _c("th", [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Fecha de creacion")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-right" }, [
+      _c("button", { staticClass: "btn btn-sm btn-warning" }, [
+        _vm._v(
+          "\n                                    Editar\n                                "
+        )
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-sm btn-danger" }, [
+        _vm._v(
+          "\n                                    Eliminar\n                                "
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
