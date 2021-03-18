@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Mark;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            MarkSeeder::class,
+            SizeSeeder::class,
+            ProductSeeder::class
+        ]);
     }
 }

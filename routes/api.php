@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('products',\App\Http\Controllers\Api\ProductController::class);
+Route::apiResource('sizes',\App\Http\Controllers\Api\SizeController::class);
+Route::apiResource('marks',\App\Http\Controllers\Api\MarkController::class);
